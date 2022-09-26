@@ -1,0 +1,28 @@
+{
+  "name": "expenned",
+  "version": "1.0.0",
+  "description": "One player starts with a doodle, another makes a drawing out of it",
+  "main": "./src/server.js",
+  "scripts": {
+    "start": "node ./src/server.js",
+    "pretest": "eslint ./src --fix",
+    "test": "echo \"Tests complete\"",
+    "nodemon": "nodemon -e html,css,js,mjs,json --watch ./src --watch ./hosted ./src/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dr-cooder/expenned.git"
+  },
+  "author": "Felix Warner",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dr-cooder/expenned/issues"
+  },
+  "homepage": "https://github.com/dr-cooder/expenned#readme",
+  "devDependencies": {
+    "eslint": "^8.24.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-plugin-import": "^2.26.0",
+    "nodemon": "^2.0.20"
+  }
+}
