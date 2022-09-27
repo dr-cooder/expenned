@@ -4,10 +4,12 @@
   "description": "One player starts with a doodle, another makes a drawing out of it",
   "main": "./src/server.js",
   "scripts": {
-    "start": "node ./src/server.js",
+    "start": "npm-run-all --parallel nodemon webpack",
     "pretest": "eslint ./src --fix",
     "test": "echo \"Tests complete\"",
-    "nodemon": "nodemon -e html,css,js,mjs,json --watch ./src --watch ./hosted ./src/server.js"
+    "nodemon": "nodemon -e html,css,js,mjs,json --watch ./src --watch ./hosted ./src/server.js",
+    "webpack": "webpack --watch",
+    "heroku-postbuild": "webpack --config heroku.config.js"
   },
   "repository": {
     "type": "git",
@@ -23,6 +25,9 @@
     "eslint": "^8.24.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-plugin-import": "^2.26.0",
-    "nodemon": "^2.0.20"
+    "nodemon": "^2.0.20",
+    "npm-run-all": "^4.1.5",
+    "webpack": "^5.74.0",
+    "webpack-cli": "^4.10.0"
   }
 }

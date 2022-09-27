@@ -20,4 +20,4 @@ const notFound = (request, response) => {
 
 module.exports = {
   notFound,
-}
+};

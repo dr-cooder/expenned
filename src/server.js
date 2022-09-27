@@ -8,7 +8,8 @@ const port = process.env.PORT || process.env.NODE_PORT || 3000;
 const urlStruct = {
   '/': htmlHandler.getIndex,
   '/style.css': htmlHandler.getCSS,
-  notFound: jsonHandler.notFound
+  '/bundle.js': htmlHandler.getJS,
+  notFound: jsonHandler.notFound,
 };
 
 const onRequest = (request, response) => {
