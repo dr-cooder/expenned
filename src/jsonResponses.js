@@ -39,7 +39,16 @@ const joinGame = (request, response, query) => {
   return respond(request, response, 200, responseJSON);
 };
 
-// const getGameState
+const getGame = (request, response, query) => {
+  const { code } = query;
+
+  const codeError = gameCode.validateCode(code, games);
+  if (codeError) {
+    return respond(request, response, 400, codeError);
+  }
+
+  return respond(request, response, 200, games[code]);
+};
 
 const notFound = (request, response) => {
   let responseJSON;
@@ -56,5 +65,6 @@ const notFound = (request, response) => {
 module.exports = {
   newGame,
   joinGame,
+  getGame,
   notFound,
 };

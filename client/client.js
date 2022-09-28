@@ -1,4 +1,23 @@
-let iAmScribbler;
+let iAmPlayer1;
+let iScribble;
+let code;
+let player1Scribbles;
+
+const gameHavingState = async (state) => {
+  const response = await fetch(`/getGame?code=${code}`, {
+    method: 'get',
+    headers: {
+      Accept: 'application/json',
+    },
+  });
+  const jsonResponse = await response.json();
+  if (response.status === 200 && jsonResponse.state === state) {
+    return jsonResponse;
+  }
+  return new Promise((resolve) => {
+    setTimeout(() => resolve(gameHavingState(state)), 1000);
+  });
+};
 
 const init = () => {
   const newGameButton = document.querySelector('#newGameButton');
@@ -15,11 +34,21 @@ const init = () => {
       },
     });
     const jsonResponse = await response.json();
-    codeDisplay.innerHTML = jsonResponse.code;
+    if (response.status === 201) {
+      iAmPlayer1 = true;
+      code = jsonResponse.code;
+      codeDisplay.innerHTML = `Tell Player 2 to join with code: ${code}`;
+      ({ player1Scribbles } = await gameHavingState(1));
+      iScribble = player1Scribbles;
+      codeDisplay.innerHTML = `Player 2 has joined! ${iScribble ? 'Make a scribble!' : 'Wait for the other player to make a scribble.'}`;
+      // Gameplay code continues here...
+    } else {
+      codeDisplay.innerHTML = jsonResponse.message;
+    }
   };
 
   joinGameButton.onclick = async () => {
-    const code = codeInput.value.toUpperCase();
+    code = codeInput.value.toUpperCase();
     // TO-DO: Client-side validation just in case (DRY)
     const response = await fetch(`/joinGame?code=${code}`, {
       method: 'post',
@@ -29,9 +58,11 @@ const init = () => {
     });
     const jsonResponse = await response.json();
     if (response.status === 200) {
-      const { player1Scribbles } = jsonResponse;
-      iAmScribbler = !player1Scribbles;
-      joinResultDisplay.innerHTML = `Game joined! ${player1Scribbles ? 'Wait for the other player to make a scribble.' : 'Make a scribble!'}`;
+      iAmPlayer1 = false;
+      ({ player1Scribbles } = jsonResponse);
+      iScribble = !player1Scribbles;
+      joinResultDisplay.innerHTML = `Game joined! ${iScribble ? 'Make a scribble!' : 'Wait for the other player to make a scribble.'}`;
+      // Gameplay code continues here...
     } else {
       joinResultDisplay.innerHTML = jsonResponse.message;
     }

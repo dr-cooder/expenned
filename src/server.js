@@ -11,6 +11,7 @@ const urlStruct = {
   '/bundle.js': htmlHandler.getJS,
   '/newGame': jsonHandler.newGame,
   '/joinGame': jsonHandler.joinGame,
+  '/getGame': jsonHandler.getGame,
   notFound: jsonHandler.notFound,
 };
 
