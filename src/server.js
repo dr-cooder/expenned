@@ -9,6 +9,8 @@ const urlStruct = {
   '/': htmlHandler.getIndex,
   '/style.css': htmlHandler.getCSS,
   '/bundle.js': htmlHandler.getJS,
+  '/newGame': jsonHandler.newGame,
+  '/joinGame': jsonHandler.joinGame,
   notFound: jsonHandler.notFound,
 };
 

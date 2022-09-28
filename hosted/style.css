@@ -1,3 +1,7 @@
 body {
   background-color: aquamarine;
 }
+
+#codeInput {
+  text-transform: uppercase;
+}
