@@ -1,7 +1,7 @@
 {
-  "name": "expenned",
+  "name": "expension",
   "version": "1.0.0",
-  "description": "One player starts with a doodle, another makes a drawing out of it",
+  "description": "One player starts with a scribble, another makes a drawing out of it",
   "main": "./src/server.js",
   "scripts": {
     "start": "npm-run-all --parallel nodemon webpack",
@@ -13,14 +13,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/dr-cooder/expenned.git"
+    "url": "git+https://github.com/dr-cooder/expension.git"
   },
   "author": "Felix Warner",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/dr-cooder/expenned/issues"
+    "url": "https://github.com/dr-cooder/expension/issues"
   },
-  "homepage": "https://github.com/dr-cooder/expenned#readme",
+  "homepage": "https://github.com/dr-cooder/expension#readme",
   "devDependencies": {
     "eslint": "^8.24.0",
     "eslint-config-airbnb": "^19.0.4",
