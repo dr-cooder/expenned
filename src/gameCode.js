@@ -1,5 +1,5 @@
-// Capital alphanumeric, ignore: I, O, Z, S
-const validCodeChars = '0123456789QWERTYUPADFGHJKLXCVBNM';
+// Capital letters only
+const validCodeChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 const validCodeCharCount = validCodeChars.length;
 // 3-character game codes
 const validCodeLength = 3;

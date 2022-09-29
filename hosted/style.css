@@ -2,6 +2,14 @@ body {
   background-color: aquamarine;
 }
 
+#screens > div {
+  display: none;
+}
+
+#screens > div.activeScreen {
+  display: block;
+}
+
 #codeInput {
   text-transform: uppercase;
 }

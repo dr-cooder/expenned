@@ -5,17 +5,33 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>exPENsion</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
   <link rel="stylesheet" type="text/css" href="/style.css">
   <script src="/bundle.js"></script>
 </head>
 <body>
-  <canvas width="640" height="480"></canvas>
-  <div>
-    <button id="newGameButton">Start new game</button>
-    <p id="codeDisplay"></p>
-    <input type="text" maxlength="3" id="codeInput">
-    <button id="joinGameButton">Join a game</button>
-    <p id="joinResultDisplay"></p>
+  <div id="screens">
+    <div id="startScreen" class="activeScreen">
+      <button id="newGameButton">Start new game</button>
+      <button id="joinGameButton">Join game via code</button>
+    </div>
+    <div id="displayCodeScreen">
+      <p id="codeDisplay"></p>
+    </div>
+    <div id="inputCodeScreen">
+      <p>Input game code:</p>
+      <input type="text" maxlength="3" id="codeInput">
+      <button id="submitJoinCodeButton">Join</button>
+      <p id="joinError"></p>
+    </div>
+    <div id="waitingScreen">
+      <p id="whyAmIWaiting"></p>
+    </div>
+    <div id="drawingScreen">
+      <p id="whatAmIDrawing"></p>
+      <canvas width="640" height="480"></canvas>
+      <button id="submitDrawingButton">Submit</button>
+    </div>
   </div>
 </body>
 </html>
