@@ -22,5 +22,6 @@ Name is a combination of "pen" and "expansion" (players draw with virtual **pens
 - https://caniuse.com/?search=canvas
 - https://stackoverflow.com/questions/2745432/best-way-to-detect-that-html5-canvas-is-not-supported
 - https://stackoverflow.com/questions/29312123/how-does-the-double-exclamation-work-in-javascript
+- https://somethingididnotknow.wordpress.com/2016/12/09/copy-all-but-some-properties-of-an-object-in-es6/
 ### External Components
 - Bootstrap reboot

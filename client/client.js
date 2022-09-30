@@ -69,10 +69,16 @@ const init = () => {
       codeDisplay.innerHTML = `Tell Player 2 to join with code: ${code}`;
       setScreen('displayCode');
       ({ player1Scribbles } = await gameHavingState(1));
+      // TO-DO: DRY here
       iScribble = player1Scribbles;
       whyAmIWaiting.innerHTML = 'Waiting for the other player to make a scribble...';
       whatAmIDrawing.innerHTML = 'Make a scribble!';
       setScreen(iScribble ? 'drawing' : 'waiting');
+      if (!iScribble){
+        await gameHavingState(2);
+        // create img element with src of /getDrawing?code=XXXX
+        // draw that img on the canvas
+      }
       // Gameplay code continues here...
     } else {
       newGameButton.disabled = false;
@@ -98,10 +104,16 @@ const init = () => {
     if (response.status === 200) {
       // iAmPlayer1 = false;
       ({ player1Scribbles } = jsonResponse);
+      // TO-DO: DRY here
       iScribble = !player1Scribbles;
       whyAmIWaiting.innerHTML = 'Waiting for the other player to make a scribble...';
       whatAmIDrawing.innerHTML = 'Make a scribble!';
       setScreen(iScribble ? 'drawing' : 'waiting');
+      if (!iScribble){
+        await gameHavingState(2);
+        // create img element with src of /getDrawing?code=XXXX
+        // draw that img on the canvas
+      }
       // Gameplay code continues here...
     } else {
       submitJoinCodeButton.disabled = false;
@@ -113,7 +125,18 @@ const init = () => {
     // Take the canvas image data and POST it to the server
     // https://stackoverflow.com/questions/13198131/how-to-save-an-html5-canvas-as-an-image-on-a-server
     const dataURL = drawingBoard.toDataURL();
-    console.log(dataURL);
+    // TO-DO: handle errors when receiving
+    await fetch(`/submitDrawing?code=${code}`, {
+      method: 'post',
+      headers: {
+        'Content-Type': 'image/png'
+      },
+      body: dataURL,
+    });
+    if (iScribble) {
+      whyAmIWaiting.innerHTML = 'Waiting for the other player to exPENd your scribble...';
+      setScreen('waiting');
+    }
   };
 };
 

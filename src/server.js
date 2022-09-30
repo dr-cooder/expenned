@@ -12,6 +12,8 @@ const urlStruct = {
   '/newGame': jsonHandler.newGame,
   '/joinGame': jsonHandler.joinGame,
   '/getGame': jsonHandler.getGame,
+  '/submitDrawing': jsonHandler.submitDrawing,
+  '/getDrawing': jsonHandler.getDrawing,
   notFound: jsonHandler.notFound,
 };
 

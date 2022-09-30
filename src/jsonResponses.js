@@ -2,9 +2,9 @@ const gameCode = require('./gameCode.js');
 
 const games = {};
 
-const respond = (request, response, status, responseJSON) => {
+const respond = (request, response, status, responseJSON, isPNG) => {
   response.writeHead(status, {
-    'Content-Type': 'application/json',
+    'Content-Type': isPNG ? 'image/png' : 'application/json',
   });
   if (responseJSON) response.write(JSON.stringify(responseJSON));
   response.end();
@@ -47,8 +47,33 @@ const getGame = (request, response, query) => {
     return respond(request, response, 400, codeError);
   }
 
-  return respond(request, response, 200, games[code]);
+  const gameNoImages = Object.assign({}, games[code], { drawing: undefined });
+  return respond(request, response, 200, gameNoImages);
 };
+
+const submitDrawing = (request, response, query) => {
+  const { code } = query;
+
+  const codeError = gameCode.validateCode(code, games, true);
+  if (codeError) {
+    return respond(request, response, 400, codeError);
+  }
+
+  // TO-DO: Give error if drawing submitted at wrong state?
+  games[code].drawing = request.body;
+  games[code].state++;
+};
+
+const getDrawing = (request, response, query) => {
+  const { code } = query;
+
+  const codeError = gameCode.validateCode(code, games, true);
+  if (codeError) {
+    return respond(request, response, 400, codeError);
+  }
+
+  return respond(request, response, 200, games[code].drawing, true);
+}
 
 const notFound = (request, response) => {
   let responseJSON;
@@ -66,5 +91,7 @@ module.exports = {
   newGame,
   joinGame,
   getGame,
+  submitDrawing,
+  getDrawing,
   notFound,
 };
