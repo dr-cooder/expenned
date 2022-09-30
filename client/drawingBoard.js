@@ -40,12 +40,22 @@ const setPenColor = (color) => {
 
 const toDataURL = () => drawingBoard.toDataURL();
 
-const drawImage = (url, x, y) => {
+// https://www.fabiofranchino.com/log/load-an-image-with-javascript-using-await/
+const loadImage = (url) => new Promise((resolve, reject) => {
   const img = new Image();
-  img.onload = () => {
-    ctx.drawImage(img, x, y);
-  };
+  img.crossOrigin = 'Anonymous';
   img.src = url;
+  img.onload = () => {
+    resolve(img);
+  };
+  img.onerror = (e) => {
+    reject(e);
+  };
+});
+
+const drawImage = async (url) => {
+  const img = await loadImage(url);
+  ctx.drawImage(img, 0, 0);
 };
 
 const init = () => {

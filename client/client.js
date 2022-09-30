@@ -74,10 +74,10 @@ const init = () => {
       whyAmIWaiting.innerHTML = 'Waiting for the other player to make a scribble...';
       whatAmIDrawing.innerHTML = 'Make a scribble!';
       setScreen(iScribble ? 'drawing' : 'waiting');
-      if (!iScribble){
+      if (!iScribble) {
         await gameHavingState(2);
-        // create img element with src of /getDrawing?code=XXXX
-        // draw that img on the canvas
+        await drawingBoard.drawImage(`/getDrawing?code=${code}`);
+        setScreen('drawing');
       }
       // Gameplay code continues here...
     } else {
@@ -90,8 +90,9 @@ const init = () => {
     setScreen('inputCode');
   };
 
-  submitJoinCodeButton.onclick = async () => {
+  const submitJoinCode = async () => {
     submitJoinCodeButton.disabled = true;
+    codeInput.disabled = true;
     code = codeInput.value.toUpperCase();
     // TO-DO: Client-side validation just in case (DRY)
     const response = await fetch(`/joinGame?code=${code}`, {
@@ -109,27 +110,35 @@ const init = () => {
       whyAmIWaiting.innerHTML = 'Waiting for the other player to make a scribble...';
       whatAmIDrawing.innerHTML = 'Make a scribble!';
       setScreen(iScribble ? 'drawing' : 'waiting');
-      if (!iScribble){
+      if (!iScribble) {
         await gameHavingState(2);
-        // create img element with src of /getDrawing?code=XXXX
-        // draw that img on the canvas
+        await drawingBoard.drawImage(`/getDrawing?code=${code}`);
+        setScreen('drawing');
       }
       // Gameplay code continues here...
     } else {
       submitJoinCodeButton.disabled = false;
+      codeInput.disabled = false;
       joinError.innerHTML = jsonResponse.message;
     }
   };
 
+  submitJoinCodeButton.onclick = submitJoinCode;
+  codeInput.onkeypress = (e) => {
+    if ((e.code || e.key) === 'Enter') {
+      submitJoinCode();
+    }
+  };
+
   submitDrawingButton.onclick = async () => {
-    // Take the canvas image data and POST it to the server
     // https://stackoverflow.com/questions/13198131/how-to-save-an-html5-canvas-as-an-image-on-a-server
     const dataURL = drawingBoard.toDataURL();
     // TO-DO: handle errors when receiving
     await fetch(`/submitDrawing?code=${code}`, {
       method: 'post',
       headers: {
-        'Content-Type': 'image/png'
+        Accept: 'application/json',
+        'Content-Type': 'image/png',
       },
       body: dataURL,
     });

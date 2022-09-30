@@ -23,5 +23,10 @@ Name is a combination of "pen" and "expansion" (players draw with virtual **pens
 - https://stackoverflow.com/questions/2745432/best-way-to-detect-that-html5-canvas-is-not-supported
 - https://stackoverflow.com/questions/29312123/how-does-the-double-exclamation-work-in-javascript
 - https://somethingididnotknow.wordpress.com/2016/12/09/copy-all-but-some-properties-of-an-object-in-es6/
+- https://stackoverflow.com/questions/11365632/how-to-detect-when-the-user-presses-enter-in-an-input-field
+- https://www.fabiofranchino.com/log/load-an-image-with-javascript-using-await/
+- https://nodejs.org/en/docs/guides/anatomy-of-an-http-transaction/
+- https://nodejs.dev/en/learn/get-http-request-body-data-using-nodejs/
+- https://stackoverflow.com/questions/11335460/how-do-i-parse-a-data-url-in-node
 ### External Components
 - Bootstrap reboot
