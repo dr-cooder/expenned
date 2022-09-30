@@ -1,3 +1,5 @@
+const drawingBoard = require('./drawingBoard.js');
+
 // let iAmPlayer1;
 let iScribble;
 let code;
@@ -34,6 +36,7 @@ const init = () => {
     inputCode: document.querySelector('#inputCodeScreen'),
     waiting: document.querySelector('#waitingScreen'),
     drawing: document.querySelector('#drawingScreen'),
+    noCanvas: document.querySelector('#noCanvasScreen'),
   };
 
   const newGameButton = document.querySelector('#newGameButton');
@@ -45,6 +48,11 @@ const init = () => {
   const whyAmIWaiting = document.querySelector('#whyAmIWaiting');
   const whatAmIDrawing = document.querySelector('#whatAmIDrawing');
   const submitDrawingButton = document.querySelector('#submitDrawingButton');
+
+  // setScreen('drawing'); // DEBUG
+  if (!drawingBoard.init()) {
+    setScreen('noCanvas');
+  }
 
   newGameButton.onclick = async () => {
     newGameButton.disabled = true;
@@ -104,6 +112,8 @@ const init = () => {
   submitDrawingButton.onclick = async () => {
     // Take the canvas image data and POST it to the server
     // https://stackoverflow.com/questions/13198131/how-to-save-an-html5-canvas-as-an-image-on-a-server
+    const dataURL = drawingBoard.toDataURL();
+    console.log(dataURL);
   };
 };
 

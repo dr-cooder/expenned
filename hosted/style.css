@@ -13,3 +13,8 @@ body {
 #codeInput {
   text-transform: uppercase;
 }
+
+#drawingBoard {
+  user-select: none;
+  background-color: #fff;
+}
