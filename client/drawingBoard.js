@@ -58,6 +58,11 @@ const drawImage = async (url) => {
   ctx.drawImage(img, 0, 0);
 };
 
+const clear = () => {
+  // https://stackoverflow.com/questions/2142535/how-to-clear-the-canvas-for-redrawing
+  ctx.clearRect(0, 0, drawingBoard.width, drawingBoard.height);
+};
+
 const init = () => {
   drawingBoard = document.querySelector('#drawingBoard');
   if (!(drawingBoard.getContext && drawingBoard.getContext('2d') && drawingBoard.toDataURL && drawingBoard.toDataURL())) {
@@ -83,4 +88,5 @@ module.exports = {
   setPenColor,
   toDataURL,
   drawImage,
+  clear,
 };

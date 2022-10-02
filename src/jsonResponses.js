@@ -33,6 +33,10 @@ const newGame = (request, response) => {
 
   games[newCode] = {
     state: 0,
+    readyForNextRound: {
+      player1: false,
+      player2: false,
+    },
   };
 
   const responseJSON = {
@@ -97,6 +101,31 @@ const getDrawing = (request, response, query) => {
   return respond(request, response, 200, games[code].drawing, true);
 };
 
+const readyForNextRound = (request, response, query) => {
+  const { code, ready, player } = query;
+  const game = games[code];
+  const codeError = gameCode.validateCode(code, games);
+  if (codeError) {
+    return respond(request, response, 400, codeError);
+  }
+  const whoIsReady = game.readyForNextRound;
+  if ((ready !== 'yes' && ready !== 'no') || (player !== 'player1' && player !== 'player2')) {
+    return respond(request, response, 400, {
+      message: 'Parameters should be "ready" as either "yes" or "no" and "player" as either "player1" or "player2".',
+      id: 'badNextRoundParameters',
+    });
+  }
+  game.readyForNextRound[player] = ready === 'yes';
+  if (whoIsReady.player1 && whoIsReady.player2) {
+    whoIsReady.player1 = false;
+    whoIsReady.player2 = false;
+    game.state = 1;
+    game.player1Scribbles = Math.random() < 0.5;
+    game.drawing = undefined;
+  }
+  return respond(request, response, 204);
+};
+
 const notFound = (request, response) => {
   let responseJSON;
   if (request.method !== 'HEAD') {
@@ -115,5 +144,6 @@ module.exports = {
   getGame,
   submitDrawing,
   getDrawing,
+  readyForNextRound,
   notFound,
 };
