@@ -2,7 +2,13 @@ body {
   background-color: aquamarine;
 }
 
+h1 {
+  margin: 32px 0;
+  text-align: center;
+}
+
 #screens > div {
+  text-align: center;
   display: none;
 }
 
@@ -16,9 +22,10 @@ body {
 
 #drawingBoard {
   user-select: none;
-  background-color: #fff;
 }
 
-#finalDrawing {
-  background-color: #fff;
+#drawingBoard, #finalDrawing {
+  display: block;
+  margin: 0 auto;
+  margin-block-end: 16px;
 }

@@ -10,17 +10,21 @@
   <script src="/bundle.js"></script>
 </head>
 <body>
+  <h1>exPENsion</h1>
   <div id="screens">
     <div id="startScreen" class="activeScreen">
+      <p>One player starts with a scribble, and the other makes a drawing out of it!</p>
       <button id="newGameButton">Start new game</button>
       <button id="joinGameButton">Join game via code</button>
     </div>
     <div id="displayCodeScreen">
-      <p id="codeDisplay"></p>
+      <p>Tell the other player to join with code:</p>
+      <h2 id="codeDisplay"></h2>
     </div>
     <div id="inputCodeScreen">
       <p>Input game code:</p>
-      <input type="text" maxlength="3" id="codeInput">
+      <!-- https://developer.mozilla.org/en-US/docs/Web/Security/Securing_your_site/Turning_off_form_autocompletion -->
+      <input type="text" maxlength="3" id="codeInput" autocomplete="off">
       <button id="submitJoinCodeButton">Join</button>
       <p id="joinError"></p>
     </div>
@@ -36,7 +40,7 @@
       <p>BEHOLD! Your beautiful exPENsion!</p>
       <img id="finalDrawing" src="" alt="The finished exPENsion">
       <input type="checkbox" id="playAgainCheckbox" name="playAgainCheckbox">
-      <label for="playAgainCheckbox">Ready to play again</label>
+      <label for="playAgainCheckbox">Ready to play again?</label>
     </div>
     <div id="noCanvasScreen">
       <p>Your browser doesn't support Canvas! Get a newer browser and start a new game.</p>

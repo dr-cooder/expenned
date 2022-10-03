@@ -60,7 +60,7 @@ const startRound = async (code, player1Scribbles, iAmPlayer1) => {
       body: dataURL,
     });
     if (iScribble) {
-      els.whyAmIWaiting.innerHTML = 'Waiting for the other player to exPENd your scribble...';
+      els.whyAmIWaiting.innerHTML = 'Waiting for the other player to make an exPENsion of your scribble...';
       setScreen('waiting');
       await gameHavingState(code, 3);
       els.finalDrawing.src = `/getDrawing?code=${code}`;
@@ -124,7 +124,7 @@ const init = () => {
     const jsonResponse = await response.json();
     if (response.status === 201) {
       const { code } = jsonResponse;
-      els.codeDisplay.innerHTML = `Tell Player 2 to join with code: ${code}`;
+      els.codeDisplay.innerHTML = code;
       setScreen('displayCode');
       const { player1Scribbles } = await gameHavingState(code, 1);
       startRound(code, player1Scribbles, true);

@@ -59,8 +59,11 @@ const drawImage = async (url) => {
 };
 
 const clear = () => {
+  const prevFillStyle = ctx.fillStyle;
+  ctx.fillStyle = 'white';
   // https://stackoverflow.com/questions/2142535/how-to-clear-the-canvas-for-redrawing
-  ctx.clearRect(0, 0, drawingBoard.width, drawingBoard.height);
+  ctx.fillRect(0, 0, drawingBoard.width, drawingBoard.height);
+  ctx.fillStyle = prevFillStyle;
 };
 
 const init = () => {

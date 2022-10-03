@@ -29,5 +29,6 @@ Name is a combination of "pen" and "extension"/"expansion" (players draw with vi
 - https://nodejs.dev/en/learn/get-http-request-body-data-using-nodejs/
 - https://stackoverflow.com/questions/11335460/how-do-i-parse-a-data-url-in-node
 - https://stackoverflow.com/questions/2142535/how-to-clear-the-canvas-for-redrawing
+- https://developer.mozilla.org/en-US/docs/Web/Security/Securing_your_site/Turning_off_form_autocompletion
 ### External Components
 - Bootstrap reboot
