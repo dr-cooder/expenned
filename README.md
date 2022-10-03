@@ -32,3 +32,9 @@ Name is a combination of "pen" and "extension"/"expansion" (players draw with vi
 - https://developer.mozilla.org/en-US/docs/Web/Security/Securing_your_site/Turning_off_form_autocompletion
 ### External Components
 - Bootstrap reboot
+## To-Do
+- Store scribble and exPENsion as separate data (distinct colors?)
+- Match citations to code with comments (and make other comments to explain code)
+- GET, POST, and HEAD
+- Make CSS actually good
+- See TO-DO comments
