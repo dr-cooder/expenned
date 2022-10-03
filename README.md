@@ -33,7 +33,9 @@ Name is a combination of "pen" and "extension"/"expansion" (players draw with vi
 ### External Components
 - Bootstrap reboot
 ## To-Do
-- Store scribble and exPENsion as separate data (distinct colors?)
+- Add try/catch around all response.json (and also check Heroku logs to see what's causing the server-side 404)
+- "Save Image" button
+- Store scribble and exPENsion as separate data (do the same separation for different rounds, this should fix the caching problem)
 - Match citations to code with comments (and make other comments to explain code)
 - GET, POST, and HEAD
 - Make CSS actually good
