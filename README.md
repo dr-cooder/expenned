@@ -26,16 +26,13 @@ Name is a combination of "pen" and "extension"/"expansion" (players draw with vi
 - https://stackoverflow.com/questions/11365632/how-to-detect-when-the-user-presses-enter-in-an-input-field
 - https://www.fabiofranchino.com/log/load-an-image-with-javascript-using-await/
 - https://nodejs.org/en/docs/guides/anatomy-of-an-http-transaction/
-- https://nodejs.dev/en/learn/get-http-request-body-data-using-nodejs/
 - https://stackoverflow.com/questions/11335460/how-do-i-parse-a-data-url-in-node
 - https://stackoverflow.com/questions/2142535/how-to-clear-the-canvas-for-redrawing
 - https://developer.mozilla.org/en-US/docs/Web/Security/Securing_your_site/Turning_off_form_autocompletion
 ### External Components
 - Bootstrap reboot
 ## To-Do
-- Add try/catch around all response.json (and also check Heroku logs to see what's causing the server-side 404)
 - "Save Image" button
-- Store scribble and exPENsion as separate data (do the same separation for different rounds, this should fix the caching problem)
 - Match citations to code with comments (and make other comments to explain code)
 - GET, POST, and HEAD
 - Make CSS actually good

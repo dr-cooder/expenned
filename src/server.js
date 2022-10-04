@@ -22,7 +22,7 @@ const onRequest = (request, response) => {
   const parsedUrl = url.parse(request.url, true);
   const handlerFunction = urlStruct[parsedUrl.pathname];
   const { query } = parsedUrl;
-  console.log(request.method, parsedUrl.path);
+  if (parsedUrl.pathname !== '/getGame') console.log(request.method, parsedUrl.pathname);
 
   if (handlerFunction) {
     handlerFunction(request, response, query);
