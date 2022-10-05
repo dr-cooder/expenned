@@ -29,3 +29,8 @@ h1 {
   margin: 0 auto;
   margin-block-end: 16px;
 }
+
+#finalScribbleOrExpension {
+  float: none;
+  margin-left: 0;
+}

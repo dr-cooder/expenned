@@ -121,7 +121,7 @@ const init = () => {
     'playAgainCheckbox',
   ]);
 
-  // setScreen('done'); // DEBUG
+  setScreen('done'); // DEBUG
   if (!drawingBoard.init()) {
     setScreen('noCanvas');
   }
