@@ -1,3 +1,6 @@
+const lineWidth = 3;
+const lineColor = 'black';
+
 let drawingBoard;
 let ctx;
 let dragging = false;
@@ -14,6 +17,8 @@ const mousedownCallback = (e) => {
   const mouse = getMouse(e);
   ctx.beginPath();
   ctx.moveTo(mouse.x, mouse.y);
+  ctx.lineTo(mouse.x, mouse.y);
+  ctx.stroke();
 };
 
 const mousemoveCallback = (e) => {
@@ -78,8 +83,8 @@ const init = () => {
   drawingBoard.onmouseup = mouseupCallback;
   drawingBoard.onmouseout = mouseoutCallback;
 
-  ctx.lineWidth = 3;
-  ctx.strokeStyle = 'black';
+  ctx.lineWidth = lineWidth;
+  ctx.strokeStyle = lineColor;
   ctx.lineCap = 'round';
   ctx.lineJoin = 'round';
 

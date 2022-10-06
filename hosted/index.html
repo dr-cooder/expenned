@@ -10,24 +10,26 @@
   <script src="/bundle.js"></script>
 </head>
 <body>
-  <h1>exPENsion</h1>
+  <h1 id="logo">
+    ex<span id="logoPen">PEN</span>sion
+  </h1>
   <div id="screens">
     <div id="startScreen" class="activeScreen">
       <p>One player starts with a scribble, and the other makes a drawing out of it!</p>
-      <button id="newGameButton">Start new game</button>
-      <button id="joinGameButton">Join game via code</button>
-      <p id="newGameError"></p>
+      <button id="newGameButton" button type="button" class="btn btn-primary">Start new game</button>
+      <button id="joinGameButton" button type="button" class="btn btn-primary">Join game via code</button>
+      <p id="newGameError" class="text-danger"></p>
     </div>
     <div id="displayCodeScreen">
-      <p>Tell the other player to join with code:</p>
+      <p>Tell the other player to join with the code:</p>
       <h2 id="codeDisplay"></h2>
     </div>
     <div id="inputCodeScreen">
-      <p>Input game code:</p>
+      <p>Enter the game code given by the other player:</p>
       <!-- https://developer.mozilla.org/en-US/docs/Web/Security/Securing_your_site/Turning_off_form_autocompletion -->
       <input type="text" maxlength="3" id="codeInput" autocomplete="off">
-      <button id="submitJoinCodeButton">Join</button>
-      <p id="joinError"></p>
+      <button id="submitJoinCodeButton" button type="button" class="btn btn-primary">Join</button>
+      <p id="joinError" class="text-danger"></p>
     </div>
     <div id="waitingScreen">
       <p id="whyAmIWaiting"></p>
@@ -35,19 +37,25 @@
     <div id="drawingScreen">
       <p id="whatAmIDrawing"></p>
       <canvas width="640" height="480" id="drawingBoard"></canvas>
-      <button id="submitDrawingButton">Submit</button>
+      <button id="submitDrawingButton" button type="button" class="btn btn-primary">Submit</button>
     </div>
     <div id="doneScreen">
       <p>BEHOLD! Your beautiful exPENsion!</p>
-      <img id="finalDrawing" src="" alt="The finished exPENsion">
+      <img id="finalScribble" src="" alt="An abstract scribble">
+      <img id="finalExpension" class="finalDrawingActive" src="" alt="A coherent drawing made as an exPENsion of an abstract scribble">
       <!-- https://getbootstrap.com/docs/5.0/forms/checks-radios/ -->
-      <div class="form-check form-switch">
+      <div id="finalScribbleOrExpensionForm" class="form-check form-switch">
         <label class="form-check-label" for="finalScribbleOrExpension">Show scribble</label>
         <input class="form-check-input" type="checkbox" id="finalScribbleOrExpension" checked>
         <label class="form-check-label" for="finalScribbleOrExpension">Show exPENsion</label>
       </div>
-      <input type="checkbox" id="playAgainCheckbox" name="playAgainCheckbox">
-      <label for="playAgainCheckbox">Ready to play again?</label>
+      <button button type="button" class="btn btn-primary">Save drawings</button>
+      <div id="playAgainCheckboxForm" class="form-check">
+        <input class="form-check-input" type="checkbox" value="" id="playAgainCheckbox">
+        <label class="form-check-label" for="playAgainCheckbox">
+          Ready to play again?
+        </label>
+      </div>
     </div>
     <div id="noCanvasScreen">
       <p>Your browser doesn't support Canvas! Please get a newer browser and start a new game.</p>

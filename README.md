@@ -29,12 +29,13 @@ Name is a combination of "pen" and "extension"/"expansion" (players draw with vi
 - https://stackoverflow.com/questions/11335460/how-do-i-parse-a-data-url-in-node
 - https://stackoverflow.com/questions/2142535/how-to-clear-the-canvas-for-redrawing
 - https://developer.mozilla.org/en-US/docs/Web/Security/Securing_your_site/Turning_off_form_autocompletion
-- https://getbootstrap.com/docs/5.0/forms/checks-radios/
+- Bootstrap documentation
 ### External Components
-- Bootstrap reboot
+- Bootstrap
 ## To-Do
-- Before/after switch, "Save Image" button
+- Functioning "Save Image" button
 - Match citations to code with comments (and make other comments to explain code)
 - GET, POST, and HEAD
-- Make CSS actually good (see Bootstrap docs)
+- Improve CSS
+    - Animate logo?
 - See TO-DO comments

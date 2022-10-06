@@ -57,6 +57,9 @@ const startRound = async (code, round, player1Scribbles, iAmPlayer1) => {
   els.whyAmIWaiting.innerHTML = 'Waiting for the other player to make a scribble...';
   els.whatAmIDrawing.innerHTML = 'Make a scribble!';
   drawingBoard.clear();
+  els.finalScribble.classList.remove('finalDrawingActive');
+  els.finalExpension.classList.add('finalDrawingActive');
+  els.finalScribbleOrExpension.checked = true;
   els.playAgainCheckbox.checked = false;
   els.submitDrawingButton.onclick = async () => {
     // https://stackoverflow.com/questions/13198131/how-to-save-an-html5-canvas-as-an-image-on-a-server
@@ -74,9 +77,9 @@ const startRound = async (code, round, player1Scribbles, iAmPlayer1) => {
       els.whyAmIWaiting.innerHTML = 'Waiting for the other player to make an exPENsion of your scribble...';
       setScreen('waiting');
       await gameHavingState(code, 3);
-      // TO-DO: get both the drawing and exPENsion and have a "before and after" radio button
-      els.finalDrawing.src = `/getDrawing?code=${code}&round=${round}&which=expension`;
-    } else els.finalDrawing.src = dataURL;
+    }
+    els.finalScribble.src = `/getDrawing?code=${code}&round=${round}&which=scribble`;
+    els.finalExpension.src = `/getDrawing?code=${code}&round=${round}&which=expension`;
     setScreen('done');
     const nextRound = await gameHavingState(code, 1);
     startRound(code, nextRound.round, nextRound.player1Scribbles, iAmPlayer1);
@@ -117,11 +120,13 @@ const init = () => {
     'whyAmIWaiting',
     'whatAmIDrawing',
     'submitDrawingButton',
-    'finalDrawing',
+    'finalScribble',
+    'finalExpension',
+    'finalScribbleOrExpension',
     'playAgainCheckbox',
   ]);
 
-  setScreen('done'); // DEBUG
+  // setScreen('done'); // DEBUG SPECIFIC SCREEN
   if (!drawingBoard.init()) {
     setScreen('noCanvas');
   }
@@ -188,6 +193,13 @@ const init = () => {
     if ((e.code || e.key) === 'Enter') {
       submitJoinCode();
     }
+  };
+
+  els.finalScribbleOrExpension.onclick = (e) => {
+    // If the switch is checked, the exPENsion is to be seen and the scribble is not.
+    const showExpension = e.target.checked;
+    els.finalScribble.classList[showExpension ? 'remove' : 'add']('finalDrawingActive');
+    els.finalExpension.classList[showExpension ? 'add' : 'remove']('finalDrawingActive');
   };
 };
 

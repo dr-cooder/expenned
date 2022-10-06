@@ -1,15 +1,34 @@
-body {
-  background-color: aquamarine;
+@import url('https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Sacramento&display=swap');
+
+html {
+  font-size: 24px;
 }
 
-h1 {
-  margin: 32px 0;
+body {
+  background: linear-gradient(to bottom right, Aquamarine, MediumSeaGreen) fixed;;
+}
+
+#logo {
+  font-family: 'Indie Flower', sans-serif;
+  margin: 2rem 0;
   text-align: center;
+}
+
+#logoPen {
+  font-family: 'Sacramento', cursive, sans-serif;
+  font-weight: bold;
 }
 
 #screens > div {
   text-align: center;
   display: none;
+}
+
+#screens > div > * {
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 #screens > div.activeScreen {
@@ -20,17 +39,41 @@ h1 {
   text-transform: uppercase;
 }
 
+#codeInput, #submitJoinCodeButton {
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
 #drawingBoard {
   user-select: none;
 }
 
-#drawingBoard, #finalDrawing {
+#drawingBoard, #finalScribble, #finalExpension {
+  margin-block-end: 1rem;
+}
+
+#finalScribble, #finalExpension {
+  display: none;
+}
+
+#drawingBoard, #finalScribble.finalDrawingActive, #finalExpension.finalDrawingActive {
   display: block;
-  margin: 0 auto;
-  margin-block-end: 16px;
+  width: 640px;
+  height: 480px;
+  background: White;
+}
+
+
+#finalScribbleOrExpensionForm {
+  padding-left: 0;
 }
 
 #finalScribbleOrExpension {
   float: none;
-  margin-left: 0;
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+}
+
+#finalScribbleOrExpensionForm > label, #playAgainCheckboxForm > label {
+  user-select: none;
 }
