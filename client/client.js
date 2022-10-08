@@ -1,3 +1,4 @@
+const gameCode = require('../src/gameCode.js');
 const drawingBoard = require('./drawingBoard.js');
 
 let screens = {};
@@ -29,6 +30,25 @@ const jsonSafe = async (response) => {
   } catch (e) {
     return undefined;
   }
+};
+
+// https://github.com/robertdiers/js-multi-file-download/blob/master/src/main/resources/static/multidownload.js
+const downloadFiles = (files) => {
+  const downloadNext = (i) => {
+    if (i >= files.length) return;
+    const file = files[i];
+    const a = document.createElement('a');
+    a.href = file.url;
+    a.target = '_parent';
+    if ('download' in a) {
+      a.download = file.filename;
+    }
+    (document.body || document.documentElement).appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(() => downloadNext(i + 1), 500);
+  };
+  downloadNext(0);
 };
 
 const gameHavingState = async (code, state) => {
@@ -64,7 +84,6 @@ const startRound = async (code, round, player1Scribbles, iAmPlayer1) => {
   els.submitDrawingButton.onclick = async () => {
     // https://stackoverflow.com/questions/13198131/how-to-save-an-html5-canvas-as-an-image-on-a-server
     const dataURL = drawingBoard.toDataURL();
-    // TO-DO: handle errors when receiving
     await fetch(`/submitDrawing?code=${code}&round=${round}&which=${iScribble ? 'scribble' : 'expension'}`, {
       method: 'post',
       headers: {
@@ -78,8 +97,22 @@ const startRound = async (code, round, player1Scribbles, iAmPlayer1) => {
       setScreen('waiting');
       await gameHavingState(code, 3);
     }
-    els.finalScribble.src = `/getDrawing?code=${code}&round=${round}&which=scribble`;
-    els.finalExpension.src = `/getDrawing?code=${code}&round=${round}&which=expension`;
+    const finalScribbleURL = `/getDrawing?code=${code}&round=${round}&which=scribble`;
+    const finalExpensionURL = `/getDrawing?code=${code}&round=${round}&which=expension`;
+    els.finalScribble.src = finalScribbleURL;
+    els.finalExpension.src = finalExpensionURL;
+    els.saveDrawingsButton.onclick = () => {
+      downloadFiles([
+        {
+          url: finalScribbleURL,
+          filename: `expensiongame_${code}_1`,
+        },
+        {
+          url: finalExpensionURL,
+          filename: `expensiongame_${code}_2`,
+        },
+      ]);
+    };
     setScreen('done');
     const nextRound = await gameHavingState(code, 1);
     startRound(code, nextRound.round, nextRound.player1Scribbles, iAmPlayer1);
@@ -123,6 +156,7 @@ const init = () => {
     'finalScribble',
     'finalExpension',
     'finalScribbleOrExpension',
+    'saveDrawingsButton',
     'playAgainCheckbox',
   ]);
 
@@ -166,7 +200,13 @@ const init = () => {
     els.submitJoinCodeButton.disabled = true;
     els.codeInput.disabled = true;
     const code = els.codeInput.value.toUpperCase();
-    // TO-DO: Client-side validation just in case (DRY)
+    const codeError = gameCode.validateCode(code);
+    if (codeError) {
+      els.submitJoinCodeButton.disabled = false;
+      els.codeInput.disabled = false;
+      els.joinError.innerHTML = codeError.message;
+      return;
+    }
     const response = await fetch(`/joinGame?code=${code}`, {
       method: 'post',
       headers: {

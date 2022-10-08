@@ -2,7 +2,7 @@
 ## Idea
 One player starts with a scribble, another makes a drawing out of it.
 Further explanation of this idea can be found here: https://playcuriously.wordpress.com/scribble-art/ (though I didn't learn about the idea from there)
-Name is a combination of "pen" and "extension"/"expansion" (players draw with virtual **pens** and the one player **expands** on the other player's scribble).
+Name is a combination of "pen" and "extension"/"expansion" (players draw with virtual **pens** and one player **expands** on the other player's scribble).
 ## Disused Names
 - eiDRAWtic (draw/eidetic; based on a Quora post I skimmed via the Google preview and as such misunderstood: https://www.quora.com/What-do-you-call-a-person-who-is-always-finishing-another-s-sentences)
 - exPENned (same idea as current, problem is it sounds the exact same as "expend")
@@ -29,13 +29,12 @@ Name is a combination of "pen" and "extension"/"expansion" (players draw with vi
 - https://stackoverflow.com/questions/11335460/how-do-i-parse-a-data-url-in-node
 - https://stackoverflow.com/questions/2142535/how-to-clear-the-canvas-for-redrawing
 - https://developer.mozilla.org/en-US/docs/Web/Security/Securing_your_site/Turning_off_form_autocompletion
+- https://github.com/robertdiers/js-multi-file-download/blob/master/src/main/resources/static/multidownload.js
 - Bootstrap documentation
 ### External Components
 - Bootstrap
 ## To-Do
-- Functioning "Save Image" button
 - Match citations to code with comments (and make other comments to explain code)
 - GET, POST, and HEAD
 - Improve CSS
     - Animate logo?
-- See TO-DO comments

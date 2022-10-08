@@ -11,7 +11,7 @@ body {
 
 #logo {
   font-family: 'Indie Flower', sans-serif;
-  margin: 2rem 0;
+  margin: 1rem 0;
   text-align: center;
 }
 
@@ -63,7 +63,6 @@ body {
   background: White;
 }
 
-
 #finalScribbleOrExpensionForm {
   padding-left: 0;
 }
@@ -76,4 +75,9 @@ body {
 
 #finalScribbleOrExpensionForm > label, #playAgainCheckboxForm > label {
   user-select: none;
+}
+
+.smallItalics {
+  font-size: 0.75rem;
+  font-style: italic;
 }
