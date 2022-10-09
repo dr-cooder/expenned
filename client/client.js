@@ -155,6 +155,9 @@ const startRound = async (code, round, player1Scribbles, iAmPlayer1) => {
   els.playAgainCheckbox.onclick = (e) => {
     fetch(`/readyForNextRound?code=${code}&ready=${e.target.checked ? 'yes' : 'no'}&player=${iAmPlayer1 ? 'player1' : 'player2'}`, {
       method: 'post',
+      headers: {
+        Accept: 'application/json',
+      },
     });
   };
 

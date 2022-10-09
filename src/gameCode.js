@@ -22,7 +22,7 @@ const validateCode = (code, games, shouldntBeInProgress) => {
   if (!code) {
     return {
       message: 'No game code specified.',
-      id: 'joinWithoutGameCode',
+      id: 'noGameCode',
     };
   }
 

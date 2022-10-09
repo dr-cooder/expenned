@@ -32,6 +32,5 @@ Name is a combination of "pen" and "extension"/"expansion" (players draw with vi
 ### External Components
 - Bootstrap
 ## To-Do
-- GET, POST, and HEAD
 - Improve CSS
     - Animate logo?

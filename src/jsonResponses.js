@@ -79,7 +79,7 @@ const getGame = (request, response, query) => {
   // Be sure not to send several big PNG data blocks
   // every time the client asks for a secondly update
   // https://somethingididnotknow.wordpress.com/2016/12/09/copy-all-but-some-properties-of-an-object-in-es6/
-  const gameNoImages = { ...games[code], drawingRound: undefined };
+  const gameNoImages = request.method !== 'HEAD' && { ...games[code], drawingRound: undefined };
   return respond(request, response, 200, gameNoImages);
 };
 
@@ -181,7 +181,7 @@ const getDrawing = (request, response, query) => {
     });
   }
 
-  return respond(request, response, 200, game.drawingRound[round][which], true);
+  return respond(request, response, 200, request.method !== 'HEAD' && game.drawingRound[round][which], true);
 };
 
 const readyForNextRound = (request, response, query) => {
