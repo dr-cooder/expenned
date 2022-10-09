@@ -1,3 +1,5 @@
+// Much of the code here is from IGME 330's canvas exercieses
+
 const lineWidth = 3;
 const lineColor = 'black';
 
@@ -14,19 +16,20 @@ const getMouse = (e) => {
 
 const mousedownCallback = (e) => {
   dragging = true;
-  const mouse = getMouse(e);
+  const { x, y } = getMouse(e);
   ctx.beginPath();
-  ctx.moveTo(mouse.x, mouse.y);
-  ctx.lineTo(mouse.x, mouse.y);
+  ctx.moveTo(x, y);
+  // Create a point as soon as the PEN is down
+  ctx.lineTo(x, y);
   ctx.stroke();
 };
 
 const mousemoveCallback = (e) => {
-  if (!dragging) return false;
-  const mouse = getMouse(e);
-  ctx.lineTo(mouse.x, mouse.y);
+  // Only draw a line if the PEN is down
+  if (!dragging) return;
+  const { x, y } = getMouse(e);
+  ctx.lineTo(x, y);
   ctx.stroke();
-  return true;
 };
 
 const mouseupCallback = () => {
@@ -35,12 +38,9 @@ const mouseupCallback = () => {
 };
 
 const mouseoutCallback = () => {
+  // Stop drawing if the PEN goes out of bounds
   dragging = false;
   ctx.closePath();
-};
-
-const setPenColor = (color) => {
-  ctx.strokeStyle = color;
 };
 
 const toDataURL = () => drawingBoard.toDataURL();
@@ -65,6 +65,8 @@ const drawImage = async (url) => {
 
 const clear = () => {
   const prevFillStyle = ctx.fillStyle;
+  // The board should be cleared with the color white instead of transparency,
+  // as the images shouldn't be downloaded as black lines on a transparent background
   ctx.fillStyle = 'white';
   // https://stackoverflow.com/questions/2142535/how-to-clear-the-canvas-for-redrawing
   ctx.fillRect(0, 0, drawingBoard.width, drawingBoard.height);
@@ -73,6 +75,11 @@ const clear = () => {
 
 const init = () => {
   drawingBoard = document.querySelector('#drawingBoard');
+  // Some (really old) browsers don't support Canvas's toDataUrl behavior or even
+  // Canvas itself for that matter, and both are vital to the game, so the game
+  // shouldn't even bother starting on the off chance that the user has an unsupportive browser
+  // https://caniuse.com/?search=canvas
+  // https://stackoverflow.com/questions/2745432/best-way-to-detect-that-html5-canvas-is-not-supported
   if (!(drawingBoard.getContext && drawingBoard.getContext('2d') && drawingBoard.toDataURL && drawingBoard.toDataURL())) {
     return false;
   }
@@ -93,7 +100,6 @@ const init = () => {
 
 module.exports = {
   init,
-  setPenColor,
   toDataURL,
   drawImage,
   clear,

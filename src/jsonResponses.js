@@ -31,6 +31,11 @@ const dataUrlToBuffer = (url) => {
 const newGame = (request, response) => {
   const newCode = gameCode.makeNewCode(games);
 
+  // GAME STATES
+  // 0: Waiting for other player to join
+  // 1: Waiting for scribble
+  // 2: Waiting for exPENsion
+  // 3: Waiting for both players' approval to start next round
   games[newCode] = {
     state: 0,
     readyForNextRound: {
@@ -39,6 +44,8 @@ const newGame = (request, response) => {
     },
     round: 0,
     drawingRound: [],
+    // "drawingRound" is a list of objects with indexes corresponding to round number,
+    // and keys "scribble" and "expension", both with image data values for that round
   };
 
   const responseJSON = {
@@ -55,6 +62,8 @@ const joinGame = (request, response, query) => {
   if (codeError) return respond(request, response, 400, codeError);
 
   games[code].state = 1;
+  // Assign a random player to scribble
+  // https://stackoverflow.com/questions/36756331/js-generate-random-boolean
   const player1Scribbles = Math.random() < 0.5;
   const responseJSON = { player1Scribbles };
   games[code].player1Scribbles = player1Scribbles;
@@ -77,29 +86,38 @@ const getGame = (request, response, query) => {
 const submitDrawing = async (request, response, query) => {
   const { code, which } = query;
   const round = Number.parseInt(query.round, 10);
+
   const codeError = gameCode.validateCode(code, games);
   if (codeError) return respond(request, response, 400, codeError);
+
+  // NaN >= 0 is false, so no need to check that separately
   if (!(round >= 0 && (which === 'scribble' || which === 'expension'))) {
     return respond(request, response, 400, {
       message: 'Parameters should be "code" as a valid game code, "round" as a nonnegative integer, and "which" as either "scribble" or "expension".',
       id: 'badSubmitDrawingParameters',
     });
   }
+
   const game = games[code];
-  const gameRound = game.round;
-  if (gameRound < round) {
+  const currentRound = game.round;
+
+  if (currentRound < round) {
     return respond(request, response, 400, {
       message: 'That game has not started that round yet.',
       id: 'roundNotStartedYet',
     });
   }
-  if (round < gameRound) {
+
+  if (round < currentRound) {
     return respond(request, response, 400, {
       message: 'That game has already finished that round.',
       id: 'roundAlreadyFinished',
     });
   }
+
+  // Create an object to store the scribble and exPENsion for this game if none exists yet
   if (!game.drawingRound[round]) game.drawingRound[round] = {};
+
   if (game.drawingRound[round][which]) {
     const isScribble = which === 'scribble';
     return respond(request, response, 400, {
@@ -107,6 +125,7 @@ const submitDrawing = async (request, response, query) => {
       id: `${isScribble ? 'scribble' : 'expension'}AlreadySubmitted`,
     });
   }
+
   if (game.state === 1 && which === 'expension') {
     return respond(request, response, 400, {
       message: 'That round of that game has not yet received a scribble, so it cannot receive an exPENsion.',
@@ -122,6 +141,7 @@ const submitDrawing = async (request, response, query) => {
       id: 'noDrawingSubmitted',
     });
   }
+
   games[code].state++;
   return respond(request, response, 204);
 };
@@ -129,22 +149,30 @@ const submitDrawing = async (request, response, query) => {
 const getDrawing = (request, response, query) => {
   const { code, which } = query;
   const round = Number.parseInt(query.round, 10);
+
   const codeError = gameCode.validateCode(code, games);
   if (codeError) return respond(request, response, 400, codeError);
+
+  // NaN >= 0 is false, so no need to check that separately
   if (!(round >= 0 && (which === 'scribble' || which === 'expension'))) {
     return respond(request, response, 400, {
       message: 'Parameters should be "code" as a valid game code, "round" as a nonnegative integer, and "which" as either "scribble" or "expension".',
       id: 'badSubmitDrawingParameters',
     });
   }
+
   const game = games[code];
+
   if (game.round < round) {
     return respond(request, response, 400, {
       message: 'That game has not started that round yet.',
       id: 'roundNotStartedYet',
     });
   }
+
+  // Create an object to store the scribble and exPENsion for this game if none exists yet
   if (!game.drawingRound[round]) game.drawingRound[round] = {};
+
   if (!game.drawingRound[round][which]) {
     const isScribble = which === 'scribble';
     return respond(request, response, 400, {
@@ -158,10 +186,12 @@ const getDrawing = (request, response, query) => {
 
 const readyForNextRound = (request, response, query) => {
   const { code, ready, player } = query;
+
   const codeError = gameCode.validateCode(code, games);
   if (codeError) {
     return respond(request, response, 400, codeError);
   }
+
   if ((ready !== 'yes' && ready !== 'no') || (player !== 'player1' && player !== 'player2')) {
     return respond(request, response, 400, {
       message: 'Parameters should be "code" as a valid game code, "ready" as either "yes" or "no", and "player" as either "player1" or "player2".',
@@ -170,22 +200,28 @@ const readyForNextRound = (request, response, query) => {
   }
 
   const game = games[code];
+
   if (game.state !== 3) {
     return respond(request, response, 400, {
       message: 'That game has a round in progress and is not awaiting approval for the next one.',
       id: 'notWaitingForNextRound',
     });
   }
+
   const whoIsReady = game.readyForNextRound;
   whoIsReady[player] = ready === 'yes';
+
   // When both players are ready, start the next round
   if (whoIsReady.player1 && whoIsReady.player2) {
     whoIsReady.player1 = false;
     whoIsReady.player2 = false;
     game.state = 1;
+    // Assign a random player to scribble
+    // https://stackoverflow.com/questions/36756331/js-generate-random-boolean
     game.player1Scribbles = Math.random() < 0.5;
     game.round++;
   }
+
   return respond(request, response, 204);
 };
 

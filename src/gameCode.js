@@ -3,6 +3,8 @@ const validCodeChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 const validCodeCharCount = validCodeChars.length;
 // 3-character game codes
 const validCodeLength = 3;
+// Considering the game's current playerbase, I doubt there will be any more
+// than 26 ^ 3 = 17576 active games at a time before the server resets after 30min of inactivty
 
 const makeNewCode = (games) => {
   let newCode;
@@ -23,9 +25,11 @@ const validateCode = (code, games, shouldntBeInProgress) => {
       id: 'joinWithoutGameCode',
     };
   }
+
   const codeLength = code.length;
   for (let i = 0; i < codeLength; i++) {
     const codeChar = code[i];
+    // https://www.w3schools.com/jsref/jsref_includes.asp
     if (!validCodeChars.includes(codeChar)) {
       return {
         message: 'Invalid game code character(s).',
@@ -33,12 +37,14 @@ const validateCode = (code, games, shouldntBeInProgress) => {
       };
     }
   }
+
   if (codeLength !== validCodeLength) {
     return {
       message: 'Invalid game code length.',
       id: 'invalidGameCodeLength',
     };
   }
+
   if (games) {
     if (!games[code]) {
       return {
@@ -53,6 +59,7 @@ const validateCode = (code, games, shouldntBeInProgress) => {
       };
     }
   }
+
   return null;
 };
 
