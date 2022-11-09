@@ -4,17 +4,33 @@ const lineWidth = 3;
 const lineColor = 'black';
 
 let drawingBoard;
+let drawingBoardOuter;
 let ctx;
 let dragging = false;
 
 const getMouse = (e) => {
   const mouse = {};
-  mouse.x = e.pageX - e.target.offsetLeft;
-  mouse.y = e.pageY - e.target.offsetTop;
+  let rawX;
+  let rawY;
+
+  // https://stackoverflow.com/questions/60688935/my-canvas-drawing-app-wont-work-on-mobile/60689429#60689429
+  if (e.type === 'touchmove') {
+    rawX = e.touches[0].pageX;
+    rawY = e.touches[0].pageY;
+  } else if (e.type === 'mousemove') {
+    rawX = e.pageX;
+    rawY = e.pageY;
+  }
+
+  mouse.x = (rawX - drawingBoardOuter.offsetLeft)
+    * (drawingBoard.width / drawingBoardOuter.offsetWidth);
+  mouse.y = (rawY - drawingBoardOuter.offsetTop)
+    * (drawingBoard.height / drawingBoardOuter.offsetHeight);
+
   return mouse;
 };
 
-const mousedownCallback = (e) => {
+const startLine = (e) => {
   dragging = true;
   const { x, y } = getMouse(e);
   ctx.beginPath();
@@ -24,7 +40,7 @@ const mousedownCallback = (e) => {
   ctx.stroke();
 };
 
-const mousemoveCallback = (e) => {
+const moveLine = (e) => {
   // Only draw a line if the PEN is down
   if (!dragging) return;
   const { x, y } = getMouse(e);
@@ -32,13 +48,7 @@ const mousemoveCallback = (e) => {
   ctx.stroke();
 };
 
-const mouseupCallback = () => {
-  dragging = false;
-  ctx.closePath();
-};
-
-const mouseoutCallback = () => {
-  // Stop drawing if the PEN goes out of bounds
+const endLine = () => {
   dragging = false;
   ctx.closePath();
 };
@@ -75,6 +85,7 @@ const clear = () => {
 
 const init = () => {
   drawingBoard = document.querySelector('#drawingBoard');
+  drawingBoardOuter = document.querySelector('#drawingBoardOuter');
   // Some (really old) browsers don't support Canvas's toDataUrl behavior or even
   // Canvas itself for that matter, and both are vital to the game, so the game
   // shouldn't even bother starting on the off chance that the user has an unsupportive browser
@@ -85,10 +96,15 @@ const init = () => {
   }
   ctx = drawingBoard.getContext('2d');
 
-  drawingBoard.onmousedown = mousedownCallback;
-  drawingBoard.onmousemove = mousemoveCallback;
-  drawingBoard.onmouseup = mouseupCallback;
-  drawingBoard.onmouseout = mouseoutCallback;
+  drawingBoardOuter.onmousedown = startLine;
+  drawingBoardOuter.onmousemove = moveLine;
+  drawingBoardOuter.onmouseup = endLine;
+  drawingBoardOuter.onmouseout = endLine;
+
+  drawingBoardOuter.ontouchstart = startLine;
+  drawingBoardOuter.ontouchend = endLine;
+  drawingBoardOuter.ontouchmove = moveLine;
+  drawingBoardOuter.ontouchcancel = endLine;
 
   ctx.lineWidth = lineWidth;
   ctx.strokeStyle = lineColor;

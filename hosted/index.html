@@ -37,13 +37,25 @@
     </div>
     <div id="drawingScreen">
       <p id="whatAmIDrawing"></p>
-      <canvas width="640" height="480" id="drawingBoard"></canvas>
+      <div id="drawingBoardOuter">
+        <div class="ratio4x3">
+          <div class="ratioContainer">
+            <canvas width="640" height="480" id="drawingBoard"></canvas>
+          </div>
+        </div>
+      </div>
       <button id="submitDrawingButton" type="button" class="btn btn-primary">Submit</button>
     </div>
     <div id="doneScreen">
       <p>BEHOLD! Your beautiful exPENsion!</p>
-      <img id="finalScribble" src="" alt="An abstract scribble">
-      <img id="finalExpension" class="finalDrawingActive" src="" alt="A coherent drawing made as an exPENsion of an abstract scribble">
+      <div id="finalDrawingOuter">
+        <div class="ratio4x3">
+          <div class="ratioContainer">
+            <img id="finalScribble" src="" alt="An abstract scribble">
+            <img id="finalExpension" class="finalDrawingActive" src="" alt="A coherent drawing made as an exPENsion of an abstract scribble">
+          </div>
+        </div>
+      </div>
       <!-- https://getbootstrap.com/docs/5.0/forms/checks-radios/ -->
       <div id="finalScribbleOrExpensionForm" class="form-check form-switch">
         <label class="form-check-label" for="finalScribbleOrExpension">Show scribble</label>

@@ -204,7 +204,7 @@ const init = () => {
     'playAgainCheckbox',
   ]);
 
-  // setScreen('done'); // Uncomment this line to debug a specific screen
+  // setScreen('drawing'); // Uncomment this line to debug a specific screen
 
   // Don't bother starting the game if canvas is not supported (see module for further explanation)
   if (!drawingBoard.init()) {

@@ -26,7 +26,6 @@ body {
 }
 
 #screens > div > * {
-  width: fit-content;
   margin-left: auto;
   margin-right: auto;
 }
@@ -45,23 +44,40 @@ body {
   margin-bottom: 0.5rem;
 }
 
-#drawingBoard {
-  user-select: none;
+.ratio4x3 {
+  position: relative;
+  width: 100%;
+  height: 0;
+  padding-bottom: 75%;
+}
+
+.ratioContainer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+#drawingBoardOuter, #finalDrawingOuter {
+  max-width: 640px;
+  max-height: 100vh;
+  background: white;
+  margin-block-end: 1rem;
 }
 
 #drawingBoard, #finalScribble, #finalExpension {
-  margin-block-end: 1rem;
+  user-select: none;
+  width: inherit;
+  height: inherit;
 }
 
 #finalScribble, #finalExpension {
   display: none;
 }
 
-#drawingBoard, #finalScribble.finalDrawingActive, #finalExpension.finalDrawingActive {
+#finalScribble.finalDrawingActive, #finalExpension.finalDrawingActive {
   display: block;
-  width: 640px;
-  height: 480px;
-  background: White;
 }
 
 #finalScribbleOrExpensionForm {
@@ -76,6 +92,10 @@ body {
 
 #finalScribbleOrExpensionForm > label, #playAgainCheckboxForm > label {
   user-select: none;
+}
+
+#playAgainCheckboxForm {
+  width: fit-content;
 }
 
 .smallItalics {
