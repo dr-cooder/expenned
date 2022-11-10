@@ -29,6 +29,7 @@ Name is a combination of "pen" and "extension"/"expansion" (players draw with vi
 - https://developer.mozilla.org/en-US/docs/Web/Security/Securing_your_site/Turning_off_form_autocompletion
 - https://github.com/robertdiers/js-multi-file-download/blob/master/src/main/resources/static/multidownload.js
 - https://stackoverflow.com/questions/60688935/my-canvas-drawing-app-wont-work-on-mobile
+- https://stackoverflow.com/questions/36212722/how-to-prevent-pull-down-to-refresh-of-mobile-chrome
 - Bootstrap documentation
 ### External Components
 - Bootstrap

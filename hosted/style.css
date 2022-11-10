@@ -1,6 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Sacramento&display=swap');
 
+/* https://stackoverflow.com/questions/36212722/how-to-prevent-pull-down-to-refresh-of-mobile-chrome */
+html, body {
+  overscroll-behavior-y: contain;
+}
+
 html {
   font-size: 24px;
 }
