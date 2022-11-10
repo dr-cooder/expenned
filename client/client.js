@@ -136,11 +136,11 @@ const startRound = async (code, round, player1Scribbles, iAmPlayer1) => {
       downloadFiles([
         {
           url: finalScribbleURL,
-          filename: `expensiongame_${code}_1`,
+          filename: `expensiongame_${code}_round${round + 1}_1`,
         },
         {
           url: finalExpensionURL,
-          filename: `expensiongame_${code}_2`,
+          filename: `expensiongame_${code}_round${round+ 1 }_2`,
         },
       ]);
     };
