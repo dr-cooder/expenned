@@ -32,8 +32,15 @@
       <button id="submitJoinCodeButton" type="button" class="btn btn-primary">Join</button>
       <p id="joinError" class="text-danger"></p>
     </div>
-    <div id="waitingScreen">
+    <div id="waitingForDrawingScreen">
       <p id="whyAmIWaiting"></p>
+      <div id="streamingBoardOuter">
+        <div class="ratio4x3">
+          <div class="ratioContainer">
+            <canvas width="640" height="480" id="streamingBoard"></canvas>
+          </div>
+        </div>
+      </div>
     </div>
     <div id="drawingScreen">
       <p id="whatAmIDrawing"></p>
@@ -51,8 +58,8 @@
       <div id="finalDrawingOuter">
         <div class="ratio4x3">
           <div class="ratioContainer">
-            <img id="finalScribble" src="" alt="An abstract scribble">
-            <img id="finalExpension" class="finalDrawingActive" src="" alt="A coherent drawing made as an exPENsion of an abstract scribble">
+            <img id="finalScribble" class="finalDrawing" src="" alt="An abstract scribble">
+            <img id="finalExpension" class="finalDrawing finalDrawingActive" src="" alt="A coherent drawing made as an exPENsion of an abstract scribble">
           </div>
         </div>
       </div>

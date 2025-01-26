@@ -64,24 +64,24 @@ body {
   height: 100%;
 }
 
-#drawingBoardOuter, #finalDrawingOuter {
+#drawingBoardOuter, #streamingBoardOuter, #finalDrawingOuter {
   max-width: 640px;
   max-height: 100vh;
   background: white;
   margin-block-end: 1rem;
 }
 
-#drawingBoard, #finalScribble, #finalExpension {
+#drawingBoard, #streamingBoard, .finalDrawing {
   user-select: none;
   width: inherit;
   height: inherit;
 }
 
-#finalScribble, #finalExpension {
+.finalDrawing {
   display: none;
 }
 
-#finalScribble.finalDrawingActive, #finalExpension.finalDrawingActive {
+.finalDrawingActive {
   display: block;
 }
 
@@ -95,11 +95,16 @@ body {
   margin-right: 0.5rem;
 }
 
-#finalScribbleOrExpensionForm > label, #playAgainCheckboxForm > label {
+#finalScribbleOrExpensionForm, #playAgainCheckboxForm {
   user-select: none;
 }
 
 #playAgainCheckboxForm {
+  margin-bottom: 1rem;
+}
+
+#playAgainCheckboxForm {
+  text-align: left;
   width: fit-content;
 }
 
