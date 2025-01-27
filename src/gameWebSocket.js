@@ -4,6 +4,9 @@ const { clientHeaders, serverHeaders } = require('../common/headers.js');
 const { gameStates } = require('../common/gameStates.js');
 const { otherOfTwoPlayers } = require('../common/commonMisc.js');
 
+const pingFrequency = 5000;
+const pingMsg = Buffer.from([serverHeaders.ping]);
+
 const games = {};
 const playerInfos = {};
 
@@ -27,7 +30,7 @@ const parseClientBuffer = (bufferWithHeader) => {
         break;
       case clientHeaders.penDown:
       case clientHeaders.penMove:
-        returnObject.xy = buffer; // TODO: Verify
+        returnObject.xy = buffer; // TODO: Verify structure
         break;
       // case clientHeaders.penUp:
       case clientHeaders.submitDrawing:
@@ -196,6 +199,16 @@ const playerDropped = (playerId) => {
   }
 };
 
+// Circumvention of Heroku automatically closing any web socket
+// that has seen no activity for 55 seconds
+const pingAllSockets = () => {
+  Object.values(playerInfos).forEach(({ socket }) => {
+    if (socket) {
+      socket.send(pingMsg);
+    }
+  });
+};
+
 const startGameWebSockets = (server) => {
   const socketServer = new WebSocketServer({ server });
   socketServer.on('connection', (socket) => {
@@ -231,6 +244,7 @@ const startGameWebSockets = (server) => {
       }
     });
   });
+  setInterval(pingAllSockets, pingFrequency);
 };
 
 module.exports = { startGameWebSockets };

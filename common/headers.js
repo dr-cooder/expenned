@@ -24,6 +24,7 @@ const serverHeaders = {
   penDown: 4,
   penMove: 5,
   penUp: 6,
+  ping: 7,
 };
 
 module.exports = { clientHeaders, serverHeaders };
